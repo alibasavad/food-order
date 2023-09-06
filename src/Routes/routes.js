@@ -3,9 +3,9 @@ import * as controllers from "../Controllers/controllers";
 const route = (app) => {
   app
     .route("/food")
-    .get(controllers.getFood)
+    .get(controllers.verifyUser,controllers.getFood)
 
-    .post(controllers.addNewFood);
+    .post(controllers.verifyAdmin,controllers.addNewFood);
 
   app
     .route("/register")

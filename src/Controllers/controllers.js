@@ -14,6 +14,53 @@ const upload = multer({
   storage: Storage,
 }).single("testImage");
 
+// verify token
+export const verifyUser = (req, res, next) => {
+  // get token from headers
+  const bearerHeader = req.headers["authorization"];
+  if (bearerHeader !== undefined) {
+    // split the token from "bearer"
+    const bearer = bearerHeader.split(" ");
+    const bearertoken = bearer[1];
+    // set the token
+    req.token = bearertoken;
+    // verify user token
+    jwt.verify(req.token, "secret", (err, userdata) => {
+      if (err) {
+        res.send("Headers info is invalid");
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.send("You must register");
+  }
+};
+
+export const verifyAdmin = (req, res, next) => {
+  // get token from headers
+  const bearerHeader = req.headers["authorization"];
+  if (bearerHeader !== undefined) {
+    // split the token from "bearer"
+    const bearer = bearerHeader.split(" ");
+    const bearertoken = bearer[1];
+    // set the token
+    req.token = bearertoken;
+    // verify user token
+    jwt.verify(req.token, "secret", (err, userdata) => {
+      if (err) {
+        res.send("Headers info is invalid");
+      } else if (userdata.user.Role == "admin") {
+        next();
+      } else {
+        res.send("this page is for admin");
+      }
+    });
+  } else {
+    res.send("this page is for admin");
+  }
+};
+
 export const getFood = async (req, res, next) => {
   try {
     const food = await Food.find({});
