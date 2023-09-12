@@ -1,18 +1,19 @@
-import { Food, User } from "../Models/models";
+import { Food, User, Order } from "../Models/models";
+export * as food from "./foodService";
 import multer from "multer";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Storage = multer.diskStorage({
-  destination: "../../public/image",
+  destination: `${__dirname}/../../public/image`,
   filename: (req, file, cb) => {
-    cb(null, file.originalname + Date.now);
+    cb(null, Date.now() + file.originalname);
   },
 });
 
-const upload = multer({
+export const upload = multer({
   storage: Storage,
-}).single("testImage");
+}).single("image");
 
 // verify token
 export const verifyUser = (req, res, next) => {
@@ -61,38 +62,6 @@ export const verifyAdmin = (req, res, next) => {
   }
 };
 
-export const getFood = async (req, res, next) => {
-  try {
-    const food = await Food.find({});
-    res.json(food);
-  } catch (err) {
-    res.send.err;
-  }
-};
-
-export const addNewFood = async (req, res, next) => {
-  try {
-    upload(req, res, async (err) => {
-      if (err) {
-        res.send(err);
-      } else {
-        let newfood = new Food({
-          Name: req.body.Name,
-          Price: req.body.Price,
-          image: {
-            Data: req.file.filename,
-            contentType: "image/png",
-          },
-        });
-        let food = await newfood.save();
-        res.json(food);
-      }
-    });
-  } catch (err) {
-    res.send(err);
-  }
-};
-
 export const register = async (req, res) => {
   try {
     let newUser = new User(req.body);
@@ -128,4 +97,29 @@ export const login = async (req, res) => {
   } catch (err) {
     res.send(err);
   }
+};
+
+export const makeOrder = async (req, res) => {
+  req.token = req.headers["authorization"].split(" ")[1];
+  let user = jwt.verify(req.token, "secret", (err, userdata) => {
+    if (err) {
+      res.send("Headers info is invalid");
+    } else {
+      return userdata.user;
+    }
+  });
+
+  try {
+    for (const food of req.body) {
+      let findFood = await Food.findById(food);
+      console.log(findFood);
+      if (findFood == null) res.send("food ID is invalid");
+    }
+
+    res.send(req.body);
+  } catch (err) {
+    res.send(err);
+  }
+
+  // res.json(user)
 };

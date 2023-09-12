@@ -12,8 +12,7 @@ const foodSchema = new Schema({
     required: true,
   },
   image: {
-    Data: Buffer,
-    contentType: String,
+    type: String,
   },
 });
 
@@ -36,5 +35,20 @@ const userSchema = Schema({
   },
 });
 
+const orderSchema = Schema({
+  UserID: {
+    type: Schema.Types.ObjectId,
+    ref: "userSchema",
+    required: true,
+  },
+  Foods: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "foodSchema",
+    },
+  ],
+});
+
 export const User = mongoose.model("User", userSchema);
 export const Food = mongoose.model("Food", foodSchema);
+export const Order = mongoose.model("Order", orderSchema);
