@@ -3,43 +3,43 @@ import * as controllers from "../Controllers/controllers";
 const route = (app) => {
   app
     .route("/food")
-    .get(controllers.verifyUser, controllers.food.getFood)
+    .get(controllers.user.verifyUser, controllers.food.getFood)
 
     .post(
-      controllers.verifyAdmin,
+      controllers.user.verifyAdmin,
       controllers.upload,
       controllers.food.addNewFood
     );
 
   app
     .route("/food/:foodID")
-    .get(controllers.verifyUser, controllers.food.getFoodByID)
+    .get(controllers.user.verifyUser, controllers.food.getFoodByID)
     .put(
-      controllers.verifyAdmin,
+      controllers.user.verifyAdmin,
       controllers.upload,
       controllers.food.updateFood
     )
 
-    .delete(controllers.verifyAdmin, controllers.food.deleteFood);
+    .delete(controllers.user.verifyAdmin, controllers.food.deleteFood);
   app
     .route("/register")
 
-    .post(controllers.register);
+    .post(controllers.user.register);
 
   app
     .route("/login")
 
-    .post(controllers.login);
+    .post(controllers.user.login);
 
   app
     .route("/order")
 
-    .post(controllers.verifyUser, controllers.makeOrder);
+    .post(controllers.user.verifyUser, controllers.order.makeOrder);
 
   app
     .route("/order/history")
 
-    .get(controllers.verifyUser);
+    .get(controllers.user.verifyUser, controllers.order.orderHistory);
 };
 
 export default route;

@@ -47,6 +47,11 @@ const orderSchema = Schema({
       ref: "foodSchema",
     },
   ],
+
+  Date: {
+    type: Date,
+    required: true,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);
