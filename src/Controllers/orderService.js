@@ -1,56 +1,38 @@
 import { Food, User, Order } from "../Models/models";
+import * as env from "../../env";
 const jwt = require("jsonwebtoken");
 
-// const checkFoods = async (order) => {
-//   for (const food of order) {
-//     let check = await Food.findById(food);
-//     console.log(food);
-//   }
-// };
-
 export const makeOrder = async (req, res) => {
-  req.token = req.headers["authorization"].split(" ")[1];
-  let user = jwt.verify(req.token, "secret", (err, userdata) => {
-    if (err) {
-      res.send("Headers info is invalid");
-    } else {
-      return userdata.user;
+  if (!env.RolePermision[req.userRole].includes(makeOrder.name)) {
+    res.send("No Permission");
+  } else {
+    try {
+      let foods = Object.values(req.body);
+      for (const food of foods) {
+        const check = await Food.findOne({ _id: food });
+      }
+      let order = await new Order({
+        UserID: req.userId,
+        Foods: foods,
+        Date: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      });
+      order.save();
+      res.json(order);
+    } catch (err) {
+      res.send(err);
     }
-  });
-
-  try {
-    let foods = Object.values(req.body);
-    for (const food of foods) {
-      const check = await Food.findOne({ _id: food });
-    }
-    let order = await new Order({
-      UserID: user._id,
-      Foods: foods,
-      Date : Date.now() + 7 * 24 * 60 * 60 * 1000,
-    });
-    order.save();
-    res.json(order);
-  } catch (err) {
-    res.send(err);
   }
-
-  // res.json(user)
 };
 
 export const orderHistory = async (req, res) => {
-  req.token = req.headers["authorization"].split(" ")[1];
-  let user = jwt.verify(req.token, "secret", (err, userdata) => {
-    if (err) {
-      res.send("Headers info is invalid");
-    } else {
-      return userdata.user;
+  if (!env.RolePermision[req.userRole].includes(orderHistory.name)) {
+    res.send("No Permission");
+  } else {
+    try {
+      let orders = await Order.find({ UserID: req.userId });
+      res.json(orders);
+    } catch (err) {
+      res.send(err);
     }
-  });
-
-  try {
-    let orders = await Order.find({ UserID: user._id });
-    res.json(orders)
-  } catch (err) {
-    res.send(err);
   }
 };

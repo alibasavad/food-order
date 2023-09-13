@@ -3,24 +3,24 @@ import * as controllers from "../Controllers/controllers";
 const route = (app) => {
   app
     .route("/food")
-    .get(controllers.user.verifyUser, controllers.food.getFood)
+    .get(controllers.user.verify, controllers.food.getFood)
 
     .post(
-      controllers.user.verifyAdmin,
+      controllers.user.verify,
       controllers.upload,
       controllers.food.addNewFood
     );
 
   app
     .route("/food/:foodID")
-    .get(controllers.user.verifyUser, controllers.food.getFoodByID)
+    .get(controllers.user.verify, controllers.food.getFoodByID)
     .put(
-      controllers.user.verifyAdmin,
+      controllers.user.verify,
       controllers.upload,
       controllers.food.updateFood
     )
 
-    .delete(controllers.user.verifyAdmin, controllers.food.deleteFood);
+    .delete(controllers.user.verify, controllers.food.deleteFood);
   app
     .route("/register")
 
@@ -32,14 +32,19 @@ const route = (app) => {
     .post(controllers.user.login);
 
   app
+    .route("/users")
+
+    .get( controllers.user.verify ,controllers.user.getAllUsers);
+
+  app
     .route("/order")
 
-    .post(controllers.user.verifyUser, controllers.order.makeOrder);
+    .post(controllers.user.verify, controllers.order.makeOrder);
 
   app
     .route("/order/history")
 
-    .get(controllers.user.verifyUser, controllers.order.orderHistory);
+    .get(controllers.user.verify, controllers.order.orderHistory);
 };
 
 export default route;
