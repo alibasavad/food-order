@@ -2,6 +2,7 @@ import { Food, User, Order } from "../Models/models";
 import * as env from "../../env";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+import { errorCodes } from "./responce";
 
 // verify token
 export const register = async (req, res) => {
@@ -11,9 +12,15 @@ export const register = async (req, res) => {
       newUser.password = await Bcrypt.hash(newUser.password, 10);
       const user = await newUser.save();
       res.json(user);
-    } else res.send("password must be more than 8 characters");
+    } else res.json({ message: errorCodes[2], error: errorCodes[2] }); // send error "password must be 8 or more charecters"
   } catch (err) {
-    res.send(err);
+    if (err.code === 11000) {
+      res.json({ message: errorCodes[3], error: err }); // send error "username is already taken"
+    } else if (err.name === "ValidationError") {
+      res.json({ message: errorCodes[5], error: err }); // send error "Validation Error : please enter valid parametrs"
+    } else {
+      res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
+    }
   }
 };
 
@@ -30,14 +37,14 @@ export const login = async (req, res) => {
     let user = await auth(new User(req.body));
 
     if (user == null) {
-      res.send("username or password is incorrect");
+      res.json({ message: errorCodes[6], error: errorCodes[6] }); // send error "username or password is incorrect"
     } else {
       jwt.sign({ user }, "secret", { expiresIn: "1h" }, async (err, token) => {
         res.json({ token });
       });
     }
   } catch (err) {
-    res.send(err);
+    res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
   }
 };
 
@@ -52,19 +59,19 @@ export const verify = async (req, res, next) => {
     req.userRole = user.Role;
     next();
   } catch (err) {
-    res.send("No permission(check headers)");
+    res.json({ message: errorCodes[7], error: errorCodes[7] }); // send error "invalid token please login"
   }
 };
 
 export const getAllUsers = async (req, res) => {
   if (!env.RolePermision[req.userRole].includes(getAllUsers.name)) {
-    res.send("No Permission");
+    res.json({ message: errorCodes[1], error: errorCodes[1] }); // send error "No Permission"
   } else {
     try {
       let users = await User.find({});
       res.json(users);
     } catch (err) {
-      res.send(err);
+      res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
     }
   }
 };

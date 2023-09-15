@@ -1,16 +1,15 @@
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import route from "./src/Routes/routes.js";
-
 const express = require("express");
+import * as env from "./env.js";
 
 const app = express();
-const PORT = 8000;
 
 // mongoDB
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://127.0.0.1:27017/Food-order", {
+mongoose.connect(env.Database, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -22,6 +21,6 @@ app.use(bodyParser.json());
 
 route(app);
 
-app.listen(PORT, () => {
+app.listen(env.PORT, () => {
   console.log(`server is running on port : ${PORT}`);
 });
