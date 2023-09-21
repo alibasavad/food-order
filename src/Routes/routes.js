@@ -3,7 +3,7 @@ import * as controllers from "../Controllers/controllers";
 const route = (app) => {
   app
     .route("/food")
-    .get(controllers.user.verify, controllers.food.getFood)
+    .get( controllers.food.getFood)
 
     .post(
       controllers.user.verify,
@@ -13,7 +13,7 @@ const route = (app) => {
 
   app
     .route("/food/:foodID")
-    .get(controllers.user.verify, controllers.food.getFoodByID)
+    .get( controllers.food.getFoodByID)
     .put(
       controllers.user.verify,
       controllers.upload,

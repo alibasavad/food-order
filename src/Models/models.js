@@ -6,6 +6,7 @@ const foodSchema = new Schema({
   Name: {
     type: String,
     required: true,
+    unique: true,
   },
   Price: {
     type: Number,
@@ -32,7 +33,7 @@ const userSchema = Schema({
   Role: {
     type: String,
     default: "normal-user",
-    enum : ["normal-user" , 'admin' , 'manager']
+    enum: ["normal-user", "admin", "manager"],
   },
 });
 

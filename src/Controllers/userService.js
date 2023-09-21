@@ -2,9 +2,8 @@ import { Food, User, Order } from "../Models/models";
 import * as env from "../../env";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-import { errorCodes } from "./responce";
+import {  errorResponse } from "./responce";
 
-// verify token
 export const register = async (req, res) => {
   try {
     let newUser = new User(req.body);
@@ -12,15 +11,9 @@ export const register = async (req, res) => {
       newUser.password = await Bcrypt.hash(newUser.password, 10);
       const user = await newUser.save();
       res.json(user);
-    } else res.json({ message: errorCodes[2], error: errorCodes[2] }); // send error "password must be 8 or more charecters"
+    } else errorResponse({ res: res, code: 2 });
   } catch (err) {
-    if (err.code === 11000) {
-      res.json({ message: errorCodes[3], error: err }); // send error "username is already taken"
-    } else if (err.name === "ValidationError") {
-      res.json({ message: errorCodes[5], error: err }); // send error "Validation Error : please enter valid parametrs"
-    } else {
-      res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
-    }
+    errorResponse({ res: res, err: err });
   }
 };
 
@@ -37,14 +30,14 @@ export const login = async (req, res) => {
     let user = await auth(new User(req.body));
 
     if (user == null) {
-      res.json({ message: errorCodes[6], error: errorCodes[6] }); // send error "username or password is incorrect"
+      errorResponse({ res: res, code: 6 });
     } else {
       jwt.sign({ user }, "secret", { expiresIn: "1h" }, async (err, token) => {
         res.json({ token });
       });
     }
   } catch (err) {
-    res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
+    errorResponse({ res: res, err: err });
   }
 };
 
@@ -59,19 +52,19 @@ export const verify = async (req, res, next) => {
     req.userRole = user.Role;
     next();
   } catch (err) {
-    res.json({ message: errorCodes[7], error: errorCodes[7] }); // send error "invalid token please login"
+    errorResponse({ res: res, code: 7 });
   }
 };
 
 export const getAllUsers = async (req, res) => {
   if (!env.RolePermision[req.userRole].includes(getAllUsers.name)) {
-    res.json({ message: errorCodes[1], error: errorCodes[1] }); // send error "No Permission"
+    errorResponse({ res: res, code: 1 });
   } else {
     try {
       let users = await User.find({});
       res.json(users);
     } catch (err) {
-      res.json({ message: errorCodes[4], error: err }); // send error "unexpected error"
+      errorResponse({ res: res, err: err });
     }
   }
 };
