@@ -1,0 +1,544 @@
+{
+	"info": {
+		"_postman_id": "3494aa0d-f3df-4f75-b229-def0e16ae0f2",
+		"name": "Food-order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29002438"
+	},
+	"item": [
+		{
+			"name": "Food service",
+			"item": [
+				{
+					"name": "getFoods",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/food?page=1&limit=3",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"food"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addFood",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Ali/Desktop/pizza.png"
+								},
+								{
+									"key": "Name",
+									"value": "pizza",
+									"type": "text"
+								},
+								{
+									"key": "Price",
+									"value": "280",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/food/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"food",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getFoodById",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/food/64f9c8179e8acbab7590578c",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"food",
+								"64f9c8179e8acbab7590578c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateFood",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQ1Mzc4NzEsImV4cCI6MTY5NDU0MTQ3MX0.qmenoLLZT2-ZXlp01hWwxP7L8UYDgJptxFEsq9-ABAs",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Ali/Desktop/apple.png"
+								},
+								{
+									"key": "Name",
+									"value": "apple",
+									"type": "text"
+								},
+								{
+									"key": "Price",
+									"value": "280",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/food/65009d383fa8a0a0879c5461",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"food",
+								"65009d383fa8a0a0879c5461"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQ1Mzc4NzEsImV4cCI6MTY5NDU0MTQ3MX0.qmenoLLZT2-ZXlp01hWwxP7L8UYDgJptxFEsq9-ABAs",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/food/64f9c8179e8acbab7590578c",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"food",
+								"64f9c8179e8acbab7590578c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user service",
+			"item": [
+				{
+					"name": "All users",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/users?page=1&limit=3",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Ali1\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/register/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"mab200\",\r\n    \"password\" : \"13811381\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/login/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order Service",
+			"item": [
+				{
+					"name": "history",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQ1NTg0ODMsImV4cCI6MTY5NDU2MjA4M30.ZCv0SRdOa8VGZ6NO5NOP6ejji42ztEVd-MuJVUO1ugA",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "Food3",
+									"value": "65009d383fa8a0a0879c5461",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Food1",
+									"value": "64f9c6429e8acbab75905788",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "d",
+									"value": "65009d383fa8a0a0879c5461",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "Food2",
+									"value": "65009d383fa8a0a0879c5461",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "daf",
+									"value": "65009d383fa8a0a0879c5461",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/order/history?page=1&limit=3",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"order",
+								"history"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "make order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQ1NTg0ODMsImV4cCI6MTY5NDU2MjA4M30.ZCv0SRdOa8VGZ6NO5NOP6ejji42ztEVd-MuJVUO1ugA",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Food\" : [\"650c8cf8a8287b86a1de1c44\" , \"6504637d8f96d9e7ae3d159a\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/order",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

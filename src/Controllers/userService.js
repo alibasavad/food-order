@@ -2,7 +2,7 @@ import { Food, User, Order } from "../Models/models";
 import * as env from "../../env";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-import {  errorResponse } from "./responce";
+import {  errorResponse , pagination} from "./responce";
 
 export const register = async (req, res) => {
   try {
@@ -62,7 +62,7 @@ export const getAllUsers = async (req, res) => {
   } else {
     try {
       let users = await User.find({});
-      res.json(users);
+      pagination(req , res , users) 
     } catch (err) {
       errorResponse({ res: res, err: err });
     }

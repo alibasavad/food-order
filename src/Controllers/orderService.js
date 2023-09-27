@@ -1,6 +1,7 @@
 import { Food, User, Order } from "../Models/models";
 import * as env from "../../env";
-import { errorResponse } from "./responce";
+import { errorResponse  , pagination} from "./responce";
+import mongoose from "mongoose";
 const jwt = require("jsonwebtoken");
 
 export const makeOrder = async (req, res, next) => {
@@ -8,7 +9,11 @@ export const makeOrder = async (req, res, next) => {
     errorResponse({ res: res, code: 1 });
   } else {
     try {
-      let foods = Object.values(req.body);
+      let foods = req.body.Food;
+      if (Object.keys(foods).length === 0) {
+        errorResponse({ res: res, code: 9 });
+        return 0;
+      }
       for (const food of foods) {
         const check = await Food.findOne({ _id: food });
         if (check === null) {
@@ -18,8 +23,7 @@ export const makeOrder = async (req, res, next) => {
       }
       let order = await new Order({
         UserID: req.userId,
-        Foods: foods,
-        Date: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        Foods: foods
       });
       order.save();
       res.json(order);
@@ -34,8 +38,17 @@ export const orderHistory = async (req, res) => {
     errorResponse({ res: res, code: 1 });
   } else {
     try {
+      const allOrders = []
       let orders = await Order.find({ UserID: req.userId });
-      res.json(orders);
+      for (let order of orders) {
+        let foods = []
+        for (let food of order.Foods){
+          let foodInfo = await Food.findById(food)
+          foods.push(foodInfo)
+        }
+        allOrders.push({'order' : order , "Foods" : foods})
+      }
+      pagination(req , res , allOrders) 
     } catch (err) {
       errorResponse({ res: res, err: err });
     }

@@ -18,4 +18,18 @@ export const errorResponse = ({ res: res, err: err, code: code }) => {
   }
 };
 
-export const normalResponce = ({ res: res, json: json }) => {};
+export const normalResponce = ({ res: res, json: json }) => {
+  res.json({ json });
+};
+
+export const pagination = (req, res, json) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
+  const resualtJsons = json.slice(startIndex, endIndex);
+
+  res.json(resualtJsons);
+};

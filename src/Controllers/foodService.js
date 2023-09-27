@@ -1,12 +1,12 @@
 import { Food, User, Order } from "../Models/models";
-import { errorResponse } from "./responce";
+import { errorResponse ,pagination } from "./responce";
 import * as env from "../../env";
 const fs = require("fs");
 
 export const getFood = async (req, res, next) => {
   try {
     const food = await Food.find({});
-    res.json(food);
+    pagination(req , res , food) 
   } catch (err) {
     errorResponse({ res: res, err: err });
   }
