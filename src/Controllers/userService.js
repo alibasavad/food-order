@@ -2,7 +2,8 @@ import { Food, User, Order } from "../Models/models";
 import * as env from "../../env";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-import {  errorResponse , pagination} from "./responce";
+import { log } from "../../log/logger.js";
+import { errorResponse, pagination } from "./responce";
 
 export const register = async (req, res) => {
   try {
@@ -11,6 +12,10 @@ export const register = async (req, res) => {
       newUser.password = await Bcrypt.hash(newUser.password, 10);
       const user = await newUser.save();
       res.json(user);
+      log({
+        level: "info",
+        message: `user : ${user._id} -- ${user.username} >> service : ${register.name}`,
+      });
     } else errorResponse({ res: res, code: 2 });
   } catch (err) {
     errorResponse({ res: res, err: err });
@@ -34,6 +39,10 @@ export const login = async (req, res) => {
     } else {
       jwt.sign({ user }, "secret", { expiresIn: "1h" }, async (err, token) => {
         res.json({ token });
+        log({
+          level: "info",
+          message: `user : ${user._id} -- ${user.username} >> service : ${login.name}`,
+        });
       });
     }
   } catch (err) {
@@ -58,12 +67,26 @@ export const verify = async (req, res, next) => {
 
 export const getAllUsers = async (req, res) => {
   if (!env.RolePermision[req.userRole].includes(getAllUsers.name)) {
+    log({
+      level: "error",
+      message: `user : ${req.userId} -- ${req.username} >> service : ${getAllUsers.name}`,
+      errorCode : 1
+    });
     errorResponse({ res: res, code: 1 });
   } else {
     try {
       let users = await User.find({});
-      pagination(req , res , users) 
+      pagination(req, res, users);
+      log({
+        level: "info",
+        message: `user : ${req.userId} -- ${req.username} >> service : ${getAllUsers.name}`,
+      });
     } catch (err) {
+      log({
+        level: "error",
+        message: `user : ${req.userId} -- ${req.username} >> service : ${getAllUsers.name}`,
+        error : err
+      });
       errorResponse({ res: res, err: err });
     }
   }

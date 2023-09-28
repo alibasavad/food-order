@@ -1,4 +1,6 @@
 import { errorCodes } from "../../env";
+import {log} from "../../log/logger.js"
+
 
 export const errorResponse = ({ res: res, err: err, code: code }) => {
   if (err === undefined) {
@@ -16,6 +18,8 @@ export const errorResponse = ({ res: res, err: err, code: code }) => {
   } else {
     res.status(errorCodes[4][1]).json({ message: errorCodes[4][0], error: err }); // send error "unexpected error"
   }
+
+
 };
 
 // export const normalResponce = ({ res: res, json: json }) => {
