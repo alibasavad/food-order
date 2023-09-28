@@ -3,8 +3,7 @@ import * as controllers from "../Controllers/controllers";
 const route = (app) => {
   app
     .route("/food")
-    .get(controllers.user.verify, controllers.food.getFood)
-
+    .get(controllers.food.getFood)
     .post(
       controllers.user.verify,
       controllers.upload,
@@ -13,38 +12,33 @@ const route = (app) => {
 
   app
     .route("/food/:foodID")
-    .get(controllers.user.verify, controllers.food.getFoodByID)
+    .get(controllers.food.getFoodByID)
     .put(
       controllers.user.verify,
       controllers.upload,
       controllers.food.updateFood
     )
-
     .delete(controllers.user.verify, controllers.food.deleteFood);
-  app
-    .route("/register")
 
-    .post(controllers.user.register);
+  app.route("/register").post(controllers.user.register);
 
-  app
-    .route("/login")
-
-    .post(controllers.user.login);
+  app.route("/login").post(controllers.user.login);
 
   app
     .route("/users")
-
-    .get( controllers.user.verify ,controllers.user.getAllUsers);
+    .get(controllers.user.verify, controllers.user.getAllUsers);
 
   app
     .route("/order")
-
     .post(controllers.user.verify, controllers.order.makeOrder);
 
   app
     .route("/order/history")
-
     .get(controllers.user.verify, controllers.order.orderHistory);
+
+  app
+  .route("/image/:imageName")
+  .get(controllers.download)
 };
 
 export default route;
