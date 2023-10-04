@@ -1,4 +1,4 @@
-import { Food, User, Order } from "../Models/models";
+import { Food } from "../Models/models";
 import { errorResponse, pagination } from "./responce";
 import * as env from "../../env";
 const fs = require("fs");
@@ -18,14 +18,14 @@ export const addNewFood = async (req, res) => {
     log({
       level: "error",
       message: `user : ${req.userId} -- ${req.username} >> service : ${addNewFood.name}`,
-      errorCode : 1
+      errorCode: 1,
     });
     errorResponse({ res: res, code: 1 });
   } else if (req.file === undefined) {
     log({
       level: "error",
       message: `user : ${req.userId} -- ${req.username} >> service : ${addNewFood.name}`,
-      errorCode : 8
+      errorCode: 8,
     });
     errorResponse({ res: res, code: 8 });
   } else {
@@ -45,7 +45,7 @@ export const addNewFood = async (req, res) => {
       log({
         level: "error",
         message: `user : ${req.userId} -- ${req.username} >> service : ${addNewFood.name}`,
-        error : err
+        error: err,
       });
       fs.unlinkSync(`${__dirname}/../../public/image/${req.file.filename}`);
       errorResponse({ res: res, err: err });
@@ -67,7 +67,7 @@ export const deleteFood = async (req, res) => {
     log({
       level: "error",
       message: `user : ${req.userId} -- ${req.username} >> service : ${deleteFood.name}`,
-      errorCode : 1
+      errorCode: 1,
     });
     errorResponse({ res: res, code: 1 });
   } else {
@@ -84,7 +84,7 @@ export const deleteFood = async (req, res) => {
       log({
         level: "error",
         message: `user : ${req.userId} -- ${req.username} >> service : ${deleteFood.name}`,
-        error : err
+        error: err,
       });
       errorResponse({ res: res, err: err });
     }
@@ -96,7 +96,7 @@ export const updateFood = async (req, res) => {
     log({
       level: "error",
       message: `user : ${req.userId} -- ${req.username} >> service : ${updateFood.name}`,
-      errorCode : 1
+      errorCode: 1,
     });
     errorResponse({ res: res, code: 1 });
   } else if (req.file === undefined) {
@@ -118,7 +118,7 @@ export const updateFood = async (req, res) => {
       log({
         level: "error",
         message: `user : ${req.userId} -- ${req.username} >> service : ${updateFood.name}`,
-        error : err
+        error: err,
       });
       errorResponse({ res: res, err: err });
     }
@@ -129,7 +129,7 @@ export const updateFood = async (req, res) => {
         log({
           level: "error",
           message: `user : ${req.userId} -- ${req.username} >> service : ${updateFood.name}`,
-          errorCode : 9
+          errorCode: 9,
         });
         errorResponse({ res: res, code: 9 });
       } else {
@@ -153,7 +153,7 @@ export const updateFood = async (req, res) => {
       log({
         level: "error",
         message: `user : ${req.userId} -- ${req.username} >> service : ${updateFood.name}`,
-        error : err
+        error: err,
       });
       errorResponse({ res: res, err: err });
     }

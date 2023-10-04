@@ -1,23 +1,48 @@
-import { Food, User, Order } from "../Models/models";
+import { User } from "../Models/models";
 import * as env from "../../env";
 const Bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 import { log } from "../../log/logger.js";
 import { errorResponse, pagination } from "./responce";
+import { sendEmailConfirmation, makeSixDigitRandomString } from "./controllers";
 
 export const register = async (req, res) => {
   try {
-    let newUser = new User(req.body);
+    const verificationCode = makeSixDigitRandomString();
+    let newUser = new User({
+      username: req.body.username,
+      Email: req.body.Email,
+      phoneNumber: req.body.phoneNumber,
+      password: req.body.password,
+    });
     if (newUser.password.length >= 8) {
       newUser.password = await Bcrypt.hash(newUser.password, 10);
-      const user = await newUser.save();
-      res.json(user);
+
+      newUser.verificationCode = verificationCode;
+      sendEmailConfirmation(verificationCode, newUser.Email);
+      await newUser.save();
+      const user = await User.findById(newUser._id).select([
+        "username",
+        "Email",
+        "phoneNumber",
+      ]);
+
+      res.json({
+        userInfo: user,
+        message: "validate your account please",
+      });
+
       log({
         level: "info",
         message: `user : ${user._id} -- ${user.username} >> service : ${register.name}`,
       });
     } else errorResponse({ res: res, code: 2 });
   } catch (err) {
+    log({
+      level: "error",
+
+      error: err,
+    });
     errorResponse({ res: res, err: err });
   }
 };
@@ -70,7 +95,7 @@ export const getAllUsers = async (req, res) => {
     log({
       level: "error",
       message: `user : ${req.userId} -- ${req.username} >> service : ${getAllUsers.name}`,
-      errorCode : 1
+      errorCode: 1,
     });
     errorResponse({ res: res, code: 1 });
   } else {
@@ -85,7 +110,7 @@ export const getAllUsers = async (req, res) => {
       log({
         level: "error",
         message: `user : ${req.userId} -- ${req.username} >> service : ${getAllUsers.name}`,
-        error : err
+        error: err,
       });
       errorResponse({ res: res, err: err });
     }

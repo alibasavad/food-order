@@ -30,16 +30,35 @@ const userSchema = Schema(
       unique: true,
     },
 
+    Email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+
+    phoneNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      minlength: 11,
+      maxlength: 11,
+    },
+
     password: {
       type: String,
       minlength: 8,
       required: true,
     },
 
+    verificationCode: {
+      type: String,
+    },
+
     Role: {
       type: String,
-      default: "normal-user",
-      enum: ["normal-user", "admin", "manager"],
+      default: "notVerified",
+      enum: ["notVerified", "normalUser", "admin", "manager", "limited"],
     },
   },
   {
@@ -50,14 +69,19 @@ const userSchema = Schema(
 const orderSchema = Schema(
   {
     UserID: {
-      type: Schema.Types.ObjectId,
-      ref: "userSchema",
-      required: true,
+      _id: {
+        type: Schema.Types.ObjectId,
+        ref: "userSchema",
+        required: true,
+      },
     },
     Foods: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "foodSchema",
+        _id: {
+          type: Schema.Types.ObjectId,
+          ref: "foodSchema",
+          required: true,
+        },
       },
     ],
   },

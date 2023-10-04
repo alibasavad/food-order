@@ -36,9 +36,12 @@ const route = (app) => {
     .route("/order/history")
     .get(controllers.user.verify, controllers.order.orderHistory);
 
+  app.route("/image/:imageName").get(controllers.download);
+
   app
-  .route("/image/:imageName")
-  .get(controllers.download)
+    .route("/verify")
+    .get(controllers.user.verify, controllers.verification.getVerificationCode)
+    .post(controllers.user.verify, controllers.verification.verifyAccount);
 };
 
 export default route;
