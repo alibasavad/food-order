@@ -327,7 +327,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"Ali1\",\r\n    \"password\" : \"12345678\"\r\n}",
+							"raw": "{\r\n    \"username\": \"mab200\",\r\n    \"password\": \"12345678\",\r\n    \"Email\": \"alibasavad1381@gmail.com\",\r\n    \"phoneNumber\": \"09382790421\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -375,7 +375,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"mab200\",\r\n    \"password\" : \"13811381\"\r\n}",
+							"raw": "{\r\n    \"username\" : \"mab200\",\r\n    \"password\" : \"12345678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -393,6 +393,114 @@
 							"port": "8000",
 							"path": [
 								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVerificationCode",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/verify",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmail",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0ZjhlZDIxZjU1Y2UyZDU5YmM4YWYxZCIsInVzZXJuYW1lIjoibWFiMjAwIiwicGFzc3dvcmQiOiIkMmEkMTAkTDVTWW0zVUlQNGJrMFRsMFFhN2Z5LlE0TXdOUndNODRGSy5kRGtIdlJrTFgzZTJEWFVlU0siLCJSb2xlIjoiYWRtaW4iLCJfX3YiOjB9LCJpYXQiOjE2OTQwOTAxMDksImV4cCI6MTY5NDA5MzcwOX0.qKoEbb-S8NoEg486TPgiUV_cU4FzFzMtJEbUeD8ZS4Y",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"verificationCode\":\"666459\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:8000/verify/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"verify",
 								""
 							]
 						}
@@ -465,7 +573,7 @@
 							]
 						},
 						"url": {
-							"raw": "127.0.0.1:8000/order/history?page=1&limit=3",
+							"raw": "127.0.0.1:8000/order/history?page=1&limit=2",
 							"host": [
 								"127",
 								"0",
@@ -484,7 +592,7 @@
 								},
 								{
 									"key": "limit",
-									"value": "3"
+									"value": "2"
 								}
 							]
 						}
@@ -515,7 +623,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Food\" : [\"650c8cf8a8287b86a1de1c44\" , \"6504637d8f96d9e7ae3d159a\"]\r\n}",
+							"raw": "{\r\n    \"Food\" : [{ \"_id\": \"651de00217ea43e43982d993\"} , {\"_id\" : \"651de01117ea43e43982d997\"}]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
